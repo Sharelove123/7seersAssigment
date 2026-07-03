@@ -70,6 +70,23 @@ class DevMenu extends ConsumerWidget {
               _chip(context, 'Online', state.simulatedOffline == false, () => ctrl.setSimulatedOffline(false)),
             ],
           ),
+          const SizedBox(height: 16),
+
+          _label('Screen State Override'),
+          Row(
+            children: [
+              _chip(context, 'Auto', state.simulatedStatus == null, () => ctrl.setSimulatedStatus(null)),
+              _chip(context, 'Loading', state.simulatedStatus == HomeStatus.loading, () => ctrl.setSimulatedStatus(HomeStatus.loading)),
+              _chip(context, 'Error', state.simulatedStatus == HomeStatus.error, () => ctrl.setSimulatedStatus(HomeStatus.error)),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              _chip(context, 'Success (Online)', state.simulatedStatus == HomeStatus.successOnline, () => ctrl.setSimulatedStatus(HomeStatus.successOnline)),
+              _chip(context, 'Success (Offline)', state.simulatedStatus == HomeStatus.successOffline, () => ctrl.setSimulatedStatus(HomeStatus.successOffline)),
+            ],
+          ),
           const SizedBox(height: 24),
 
           _label('DB Actions'),

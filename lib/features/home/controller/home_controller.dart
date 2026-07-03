@@ -1,10 +1,18 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../repository/home_repository.dart';
 import '../../../core/services/connectivity_service.dart';
 import '../../../models/user_model.dart';
 import '../../../models/guide_model.dart';
 import '../../../models/community_post_model.dart';
+
+enum HomeStatus {
+  loading,
+  successOnline,
+  successOffline,
+  error,
+}
 
 class HomeState {
   final UserModel? userProfile;
@@ -14,6 +22,8 @@ class HomeState {
   final String simulatedTimeOfDay;
   final bool? simulatedFirstTime;
   final bool? simulatedOffline;
+  final HomeStatus status;
+  final HomeStatus? simulatedStatus;
 
   HomeState({
     this.userProfile,
@@ -23,6 +33,8 @@ class HomeState {
     this.simulatedTimeOfDay = 'Auto',
     this.simulatedFirstTime,
     this.simulatedOffline,
+    this.status = HomeStatus.loading,
+    this.simulatedStatus,
   });
 
   bool get isOffline => simulatedOffline ?? !isNetworkConnected;
@@ -53,6 +65,11 @@ class HomeState {
     return (hour >= 5 && hour < 17) ? 'Morning' : 'Evening';
   }
 
+  HomeStatus get effectiveStatus {
+    if (simulatedStatus != null) return simulatedStatus!;
+    return status;
+  }
+
   HomeState copyWith({
     UserModel? userProfile,
     List<GuideModel>? guides,
@@ -61,6 +78,8 @@ class HomeState {
     String? simulatedTimeOfDay,
     bool? Function()? simulatedFirstTime,
     bool? Function()? simulatedOffline,
+    HomeStatus? status,
+    HomeStatus? Function()? simulatedStatus,
   }) {
     return HomeState(
       userProfile: userProfile ?? this.userProfile,
@@ -70,6 +89,8 @@ class HomeState {
       simulatedTimeOfDay: simulatedTimeOfDay ?? this.simulatedTimeOfDay,
       simulatedFirstTime: simulatedFirstTime != null ? simulatedFirstTime() : this.simulatedFirstTime,
       simulatedOffline: simulatedOffline != null ? simulatedOffline() : this.simulatedOffline,
+      status: status ?? this.status,
+      simulatedStatus: simulatedStatus != null ? simulatedStatus() : this.simulatedStatus,
     );
   }
 }
@@ -82,30 +103,107 @@ class HomeController extends StateNotifier<HomeState> {
   StreamSubscription? _guidesSub;
   StreamSubscription? _postsSub;
   StreamSubscription? _connectSub;
+  Timer? _timeoutTimer;
+
+  bool _userLoaded = false;
+  bool _guidesLoaded = false;
+  bool _postsLoaded = false;
 
   HomeController(this._repo, this._connectivityStream) : super(HomeState()) {
     _init();
   }
 
   void _init() {
+    _cancelSubscriptions();
+    _userLoaded = false;
+    _guidesLoaded = false;
+    _postsLoaded = false;
+
+    state = state.copyWith(
+      status: HomeStatus.loading,
+    );
+
+    _timeoutTimer?.cancel();
+    _timeoutTimer = Timer(const Duration(seconds: 5), () {
+      if (state.status == HomeStatus.loading) {
+        if (state.userProfile != null || state.guides.isNotEmpty) {
+          state = state.copyWith(status: HomeStatus.successOffline);
+        } else {
+          state = state.copyWith(status: HomeStatus.error);
+        }
+      }
+    });
+
     _userSub = _repo.getUserProfile().listen(
-      (user) => state = state.copyWith(userProfile: user),
-      onError: (_) {},
+      (user) {
+        _userLoaded = true;
+        state = state.copyWith(userProfile: user);
+        _checkLoadingSuccess();
+      },
+      onError: (err) {
+        debugPrint('User stream error: $err');
+        state = state.copyWith(status: HomeStatus.error);
+      },
     );
 
     _guidesSub = _repo.getGuides().listen(
-      (list) => state = state.copyWith(guides: list),
-      onError: (_) {},
+      (list) {
+        _guidesLoaded = true;
+        state = state.copyWith(guides: list);
+        _checkLoadingSuccess();
+      },
+      onError: (err) {
+        debugPrint('Guides stream error: $err');
+        state = state.copyWith(status: HomeStatus.error);
+      },
     );
 
     _postsSub = _repo.getCommunityPosts().listen(
-      (list) => state = state.copyWith(communityPosts: list),
-      onError: (_) {},
+      (list) {
+        _postsLoaded = true;
+        state = state.copyWith(communityPosts: list);
+        _checkLoadingSuccess();
+      },
+      onError: (err) {
+        debugPrint('Community posts stream error: $err');
+        state = state.copyWith(status: HomeStatus.error);
+      },
     );
 
     _connectSub = _connectivityStream.listen(
-      (connected) => state = state.copyWith(isNetworkConnected: connected),
+      (connected) {
+        state = state.copyWith(isNetworkConnected: connected);
+        _updateOnlineOfflineStatus();
+      },
     );
+  }
+
+  void _checkLoadingSuccess() {
+    if (_userLoaded && _guidesLoaded && _postsLoaded) {
+      _timeoutTimer?.cancel();
+      _updateOnlineOfflineStatus();
+    }
+  }
+
+  void _updateOnlineOfflineStatus() {
+    if (!_userLoaded || !_guidesLoaded || !_postsLoaded) return;
+
+    if (state.isOffline) {
+      state = state.copyWith(status: HomeStatus.successOffline);
+    } else {
+      state = state.copyWith(status: HomeStatus.successOnline);
+    }
+  }
+
+  void retryLoading() {
+    _init();
+  }
+
+  void _cancelSubscriptions() {
+    _userSub?.cancel();
+    _guidesSub?.cancel();
+    _postsSub?.cancel();
+    _connectSub?.cancel();
   }
 
   Future<void> completeCheckIn() async {
@@ -133,14 +231,17 @@ class HomeController extends StateNotifier<HomeState> {
 
   void setSimulatedFirstTime(bool? value) => state = state.copyWith(simulatedFirstTime: () => value);
 
-  void setSimulatedOffline(bool? value) => state = state.copyWith(simulatedOffline: () => value);
+  void setSimulatedOffline(bool? value) {
+    state = state.copyWith(simulatedOffline: () => value);
+    _updateOnlineOfflineStatus();
+  }
+
+  void setSimulatedStatus(HomeStatus? value) => state = state.copyWith(simulatedStatus: () => value);
 
   @override
   void dispose() {
-    _userSub?.cancel();
-    _guidesSub?.cancel();
-    _postsSub?.cancel();
-    _connectSub?.cancel();
+    _timeoutTimer?.cancel();
+    _cancelSubscriptions();
     super.dispose();
   }
 }

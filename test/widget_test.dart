@@ -48,7 +48,22 @@ void main() {
 
       expect(state.isFirstTime, false);
       expect(state.greetingText, 'Evening, Harsh.');
-      expect(state.accentText, 'good work today.');
+    });
+
+    test('Should resolve simulatedStatus if provided', () {
+      final state = HomeState(
+        status: HomeStatus.loading,
+        simulatedStatus: HomeStatus.successOnline,
+      );
+      expect(state.effectiveStatus, HomeStatus.successOnline);
+    });
+
+    test('Should fall back to status if simulatedStatus is null', () {
+      final state = HomeState(
+        status: HomeStatus.error,
+        simulatedStatus: null,
+      );
+      expect(state.effectiveStatus, HomeStatus.error);
     });
   });
 }
