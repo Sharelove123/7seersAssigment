@@ -30,7 +30,7 @@ class HomeState {
     this.guides = const [],
     this.communityPosts = const [],
     this.isNetworkConnected = true,
-    this.simulatedTimeOfDay = 'Morning',
+    this.simulatedTimeOfDay = 'Auto',
     this.simulatedFirstTime,
     this.simulatedOffline,
     this.status = HomeStatus.loading,
