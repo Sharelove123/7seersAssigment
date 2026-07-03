@@ -45,10 +45,7 @@ class GuidesSection extends StatelessWidget {
         ),
       );
 
-      return [
-        GuideCard(guide: paidGuide),
-        GuideCard(guide: freeGuide),
-      ];
+      return [GuideCard(guide: paidGuide), GuideCard(guide: freeGuide)];
     } else if (state.completedCheckIn) {
       final progressGuide = state.guides.firstWhere(
         (g) => g.id == 'struggle_love',
@@ -60,10 +57,7 @@ class GuidesSection extends StatelessWidget {
         ),
       );
 
-      return [
-        GuideCard(guide: progressGuide),
-        CommunitySection(state: state),
-      ];
+      return [GuideCard(guide: progressGuide), CommunitySection(state: state)];
     } else {
       final mainGuide = state.guides.firstWhere(
         (g) => g.id == 'sleepless_month',
@@ -78,7 +72,12 @@ class GuidesSection extends StatelessWidget {
     }
   }
 
-  GuideModel _getDefaultGuide(String id, String title, String category, String? tag) {
+  GuideModel _getDefaultGuide(
+    String id,
+    String title,
+    String category,
+    String? tag,
+  ) {
     String imageUrl = '';
     String description = 'A soothing read.';
     if (id == 'sleepless_month') {

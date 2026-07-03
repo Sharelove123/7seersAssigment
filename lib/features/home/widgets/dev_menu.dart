@@ -28,7 +28,13 @@ class DevMenu extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('State Simulator', style: AppTheme.titleStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              Text(
+                'State Simulator',
+                style: AppTheme.titleStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: () => Navigator.pop(context),
@@ -45,9 +51,24 @@ class DevMenu extends ConsumerWidget {
           _label('Time of Day'),
           Row(
             children: [
-              _chip(context, 'Auto', state.simulatedTimeOfDay == 'Auto', () => ctrl.setSimulatedTimeOfDay('Auto')),
-              _chip(context, 'Morning', state.simulatedTimeOfDay == 'Morning', () => ctrl.setSimulatedTimeOfDay('Morning')),
-              _chip(context, 'Evening', state.simulatedTimeOfDay == 'Evening', () => ctrl.setSimulatedTimeOfDay('Evening')),
+              _chip(
+                context,
+                'Auto',
+                state.simulatedTimeOfDay == 'Auto',
+                () => ctrl.setSimulatedTimeOfDay('Auto'),
+              ),
+              _chip(
+                context,
+                'Morning',
+                state.simulatedTimeOfDay == 'Morning',
+                () => ctrl.setSimulatedTimeOfDay('Morning'),
+              ),
+              _chip(
+                context,
+                'Evening',
+                state.simulatedTimeOfDay == 'Evening',
+                () => ctrl.setSimulatedTimeOfDay('Evening'),
+              ),
             ],
           ),
           const SizedBox(height: 16),
@@ -55,9 +76,24 @@ class DevMenu extends ConsumerWidget {
           _label('User State'),
           Row(
             children: [
-              _chip(context, 'Database', state.simulatedFirstTime == null, () => ctrl.setSimulatedFirstTime(null)),
-              _chip(context, 'First-Time', state.simulatedFirstTime == true, () => ctrl.setSimulatedFirstTime(true)),
-              _chip(context, 'Regular', state.simulatedFirstTime == false, () => ctrl.setSimulatedFirstTime(false)),
+              _chip(
+                context,
+                'Database',
+                state.simulatedFirstTime == null,
+                () => ctrl.setSimulatedFirstTime(null),
+              ),
+              _chip(
+                context,
+                'First-Time',
+                state.simulatedFirstTime == true,
+                () => ctrl.setSimulatedFirstTime(true),
+              ),
+              _chip(
+                context,
+                'Regular',
+                state.simulatedFirstTime == false,
+                () => ctrl.setSimulatedFirstTime(false),
+              ),
             ],
           ),
           const SizedBox(height: 16),
@@ -65,9 +101,24 @@ class DevMenu extends ConsumerWidget {
           _label('Network'),
           Row(
             children: [
-              _chip(context, 'Device', state.simulatedOffline == null, () => ctrl.setSimulatedOffline(null)),
-              _chip(context, 'Offline', state.simulatedOffline == true, () => ctrl.setSimulatedOffline(true)),
-              _chip(context, 'Online', state.simulatedOffline == false, () => ctrl.setSimulatedOffline(false)),
+              _chip(
+                context,
+                'Device',
+                state.simulatedOffline == null,
+                () => ctrl.setSimulatedOffline(null),
+              ),
+              _chip(
+                context,
+                'Offline',
+                state.simulatedOffline == true,
+                () => ctrl.setSimulatedOffline(true),
+              ),
+              _chip(
+                context,
+                'Online',
+                state.simulatedOffline == false,
+                () => ctrl.setSimulatedOffline(false),
+              ),
             ],
           ),
           const SizedBox(height: 16),
@@ -75,16 +126,41 @@ class DevMenu extends ConsumerWidget {
           _label('Screen State Override'),
           Row(
             children: [
-              _chip(context, 'Auto', state.simulatedStatus == null, () => ctrl.setSimulatedStatus(null)),
-              _chip(context, 'Loading', state.simulatedStatus == HomeStatus.loading, () => ctrl.setSimulatedStatus(HomeStatus.loading)),
-              _chip(context, 'Error', state.simulatedStatus == HomeStatus.error, () => ctrl.setSimulatedStatus(HomeStatus.error)),
+              _chip(
+                context,
+                'Auto',
+                state.simulatedStatus == null,
+                () => ctrl.setSimulatedStatus(null),
+              ),
+              _chip(
+                context,
+                'Loading',
+                state.simulatedStatus == HomeStatus.loading,
+                () => ctrl.setSimulatedStatus(HomeStatus.loading),
+              ),
+              _chip(
+                context,
+                'Error',
+                state.simulatedStatus == HomeStatus.error,
+                () => ctrl.setSimulatedStatus(HomeStatus.error),
+              ),
             ],
           ),
           const SizedBox(height: 8),
           Row(
             children: [
-              _chip(context, 'Success (Online)', state.simulatedStatus == HomeStatus.successOnline, () => ctrl.setSimulatedStatus(HomeStatus.successOnline)),
-              _chip(context, 'Success (Offline)', state.simulatedStatus == HomeStatus.successOffline, () => ctrl.setSimulatedStatus(HomeStatus.successOffline)),
+              _chip(
+                context,
+                'Success (Online)',
+                state.simulatedStatus == HomeStatus.successOnline,
+                () => ctrl.setSimulatedStatus(HomeStatus.successOnline),
+              ),
+              _chip(
+                context,
+                'Success (Offline)',
+                state.simulatedStatus == HomeStatus.successOffline,
+                () => ctrl.setSimulatedStatus(HomeStatus.successOffline),
+              ),
             ],
           ),
           const SizedBox(height: 24),
@@ -108,7 +184,11 @@ class DevMenu extends ConsumerWidget {
                   },
                   child: Text(
                     'Set Regular',
-                    style: AppTheme.bodyStyle(fontSize: 12, color: AppColors.textPrimary, fontWeight: FontWeight.w600),
+                    style: AppTheme.bodyStyle(
+                      fontSize: 12,
+                      color: AppColors.textPrimary,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),
@@ -129,7 +209,11 @@ class DevMenu extends ConsumerWidget {
                   },
                   child: Text(
                     'Set First-Time',
-                    style: AppTheme.bodyStyle(fontSize: 12, color: AppColors.textPrimary, fontWeight: FontWeight.w600),
+                    style: AppTheme.bodyStyle(
+                      fontSize: 12,
+                      color: AppColors.textPrimary,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),
@@ -146,12 +230,21 @@ class DevMenu extends ConsumerWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: Text(
         text,
-        style: AppTheme.bodyStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.textSecondary),
+        style: AppTheme.bodyStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
+          color: AppColors.textSecondary,
+        ),
       ),
     );
   }
 
-  Widget _chip(BuildContext context, String label, bool selected, VoidCallback onTap) {
+  Widget _chip(
+    BuildContext context,
+    String label,
+    bool selected,
+    VoidCallback onTap,
+  ) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4),

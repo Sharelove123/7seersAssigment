@@ -51,7 +51,11 @@ class CheckInCard extends StatelessWidget {
               if (completedCheckIn)
                 Row(
                   children: [
-                    const Icon(Icons.check, size: 18, color: AppColors.textPrimary),
+                    const Icon(
+                      Icons.check,
+                      size: 18,
+                      color: AppColors.textPrimary,
+                    ),
                     const SizedBox(width: 8),
                     Text(
                       'Done for this week.',
@@ -74,8 +78,8 @@ class CheckInCard extends StatelessWidget {
                 completedCheckIn
                     ? "Next one's ready Sunday. We'll keep\nthings quiet until then."
                     : isFirstTime
-                        ? "Five minutes. There's no wrong answer here."
-                        : "Your weekly check-in is ready when you are.\nNo pressure to do it now.",
+                    ? "Five minutes. There's no wrong answer here."
+                    : "Your weekly check-in is ready when you are.\nNo pressure to do it now.",
                 style: AppTheme.bodyStyle(
                   fontSize: 14,
                   color: AppColors.textSecondary,

@@ -15,7 +15,8 @@ class GuideCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isSplitLayout = guide.category == "THIS WEEK'S GUIDE" &&
+    final isSplitLayout =
+        guide.category == "THIS WEEK'S GUIDE" &&
         guide.id == 'sleepless_month' &&
         !forceFullImageBackground;
 
@@ -60,7 +61,10 @@ class GuideCard extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 guide.description,
-                style: AppTheme.bodyStyle(fontSize: 13, color: AppColors.textSecondary),
+                style: AppTheme.bodyStyle(
+                  fontSize: 13,
+                  color: AppColors.textSecondary,
+                ),
               ),
             ],
           ),
@@ -119,7 +123,10 @@ class GuideCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(guide.title, style: AppTheme.titleStyle(fontSize: 20, color: Colors.white)),
+                Text(
+                  guide.title,
+                  style: AppTheme.titleStyle(fontSize: 20, color: Colors.white),
+                ),
               ],
             ),
           ),
@@ -134,7 +141,8 @@ class GuideCard extends StatelessWidget {
       height: height,
       width: double.infinity,
       fit: BoxFit.cover,
-      loadingBuilder: (_, child, progress) => progress == null ? child : _placeholder(height: height),
+      loadingBuilder: (_, child, progress) =>
+          progress == null ? child : _placeholder(height: height),
       errorBuilder: (context, error, stack) => _placeholder(height: height),
     );
   }
@@ -151,7 +159,11 @@ class GuideCard extends StatelessWidget {
         ),
       ),
       child: const Center(
-        child: Icon(Icons.image_outlined, color: AppColors.inactiveIcon, size: 28),
+        child: Icon(
+          Icons.image_outlined,
+          color: AppColors.inactiveIcon,
+          size: 28,
+        ),
       ),
     );
   }

@@ -10,7 +10,8 @@ class LoadingScreen extends StatefulWidget {
   State<LoadingScreen> createState() => _LoadingScreenState();
 }
 
-class _LoadingScreenState extends State<LoadingScreen> with SingleTickerProviderStateMixin {
+class _LoadingScreenState extends State<LoadingScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -21,9 +22,10 @@ class _LoadingScreenState extends State<LoadingScreen> with SingleTickerProvider
       vsync: this,
       duration: const Duration(milliseconds: 1500),
     )..repeat(reverse: true);
-    _animation = Tween<double>(begin: 0.3, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _animation = Tween<double>(
+      begin: 0.3,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -66,7 +68,10 @@ class _LoadingScreenState extends State<LoadingScreen> with SingleTickerProvider
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) => Text(
                       'Dall',
-                      style: AppTheme.titleStyle(fontSize: 28, fontWeight: FontWeight.w700),
+                      style: AppTheme.titleStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 ),
@@ -76,7 +81,9 @@ class _LoadingScreenState extends State<LoadingScreen> with SingleTickerProvider
                   height: 24,
                   child: CircularProgressIndicator(
                     strokeWidth: 2,
-                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.darkBox),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColors.darkBox,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 24),

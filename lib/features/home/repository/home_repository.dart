@@ -21,11 +21,9 @@ class HomeRepository {
   }
 
   Stream<UserModel?> getUserProfile() {
-    return _firestore
-        .collection('users')
-        .doc('harsh_profile')
-        .snapshots()
-        .map((snap) {
+    return _firestore.collection('users').doc('harsh_profile').snapshots().map((
+      snap,
+    ) {
       if (snap.exists && snap.data() != null) {
         return UserModel.fromMap(snap.data()!, snap.id);
       }
@@ -51,13 +49,20 @@ class HomeRepository {
         .collection('guides')
         .orderBy('order')
         .snapshots()
-        .map((snap) => snap.docs.map((d) => GuideModel.fromMap(d.data(), d.id)).toList());
+        .map(
+          (snap) =>
+              snap.docs.map((d) => GuideModel.fromMap(d.data(), d.id)).toList(),
+        );
   }
 
   Stream<List<CommunityPostModel>> getCommunityPosts() {
     return _firestore
         .collection('community_posts')
         .snapshots()
-        .map((snap) => snap.docs.map((d) => CommunityPostModel.fromMap(d.data(), d.id)).toList());
+        .map(
+          (snap) => snap.docs
+              .map((d) => CommunityPostModel.fromMap(d.data(), d.id))
+              .toList(),
+        );
   }
 }

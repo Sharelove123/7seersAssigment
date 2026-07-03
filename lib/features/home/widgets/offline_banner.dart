@@ -57,7 +57,9 @@ class OfflineBanner extends StatelessWidget {
                             style: AppTheme.bodyStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
-                              color: AppColors.offlineBannerText.withValues(alpha: 0.9),
+                              color: AppColors.offlineBannerText.withValues(
+                                alpha: 0.9,
+                              ),
                             ),
                           ),
                         ],

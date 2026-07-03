@@ -22,7 +22,8 @@ class FirebaseSeeder {
       batch.set(guidesCollection.doc('sleepless_month'), {
         'title': 'The first sleepless month',
         'description': 'A short read on what no one tells you. 6 min.',
-        'imageUrl': 'https://images.unsplash.com/photo-1544124499-58912cbddaad?w=600&auto=format&fit=crop',
+        'imageUrl':
+            'https://images.unsplash.com/photo-1544124499-58912cbddaad?w=600&auto=format&fit=crop',
         'category': "THIS WEEK'S GUIDE",
         'tag': null,
         'order': 1,
@@ -31,7 +32,8 @@ class FirebaseSeeder {
       batch.set(guidesCollection.doc('struggle_love'), {
         'title': 'You can love it and\nstill struggle',
         'description': 'Pick up where you left off',
-        'imageUrl': 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=600&auto=format&fit=crop',
+        'imageUrl':
+            'https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=600&auto=format&fit=crop',
         'category': 'PICK UP WHERE YOU LEFT OFF',
         'tag': null,
         'order': 2,
@@ -40,7 +42,8 @@ class FirebaseSeeder {
       batch.set(guidesCollection.doc('how_to_be_there'), {
         'title': "How to be there\nwhen you don't know how",
         'description': "This week's guide for first-time users",
-        'imageUrl': 'https://images.unsplash.com/photo-1536640712-4d4c36ff0e4e?w=600&auto=format&fit=crop',
+        'imageUrl':
+            'https://images.unsplash.com/photo-1536640712-4d4c36ff0e4e?w=600&auto=format&fit=crop',
         'category': "THIS WEEK'S GUIDE",
         'tag': 'Paid Guide',
         'order': 3,
@@ -49,7 +52,8 @@ class FirebaseSeeder {
       batch.set(guidesCollection.doc('talking_it_out'), {
         'title': 'First-time dads\ntalking it out',
         'description': 'From your guides',
-        'imageUrl': 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&auto=format&fit=crop',
+        'imageUrl':
+            'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&auto=format&fit=crop',
         'category': 'FROM YOUR GUIDES',
         'tag': 'FREE',
         'order': 4,

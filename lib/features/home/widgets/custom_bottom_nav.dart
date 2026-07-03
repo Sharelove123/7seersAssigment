@@ -10,9 +10,7 @@ class CustomBottomNav extends StatelessWidget {
       width: double.infinity,
       decoration: const BoxDecoration(
         color: AppColors.bottomNavBarBackground,
-        border: Border(
-          top: BorderSide(color: AppColors.border, width: 1),
-        ),
+        border: Border(top: BorderSide(color: AppColors.border, width: 1)),
       ),
       padding: const EdgeInsets.only(top: 12, bottom: 24),
       child: Row(

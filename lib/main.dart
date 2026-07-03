@@ -20,11 +20,7 @@ void main() async {
     debugPrint('Firebase init failed, running offline: $e');
   }
 
-  runApp(
-    ProviderScope(
-      child: DallApp(isFirebaseInitialized: firebaseReady),
-    ),
-  );
+  runApp(ProviderScope(child: DallApp(isFirebaseInitialized: firebaseReady)));
 }
 
 class DallApp extends StatelessWidget {

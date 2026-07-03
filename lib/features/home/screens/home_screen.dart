@@ -56,10 +56,14 @@ class HomeScreen extends ConsumerWidget {
                                   height: 16,
                                   fit: BoxFit.contain,
                                 ),
-                                if (state.effectiveStatus == HomeStatus.successOffline) ...[
+                                if (state.effectiveStatus ==
+                                    HomeStatus.successOffline) ...[
                                   const SizedBox(width: 8),
                                   Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 6,
+                                      vertical: 2,
+                                    ),
                                     decoration: BoxDecoration(
                                       color: AppColors.badgePaidBg,
                                       borderRadius: BorderRadius.zero,
@@ -103,8 +107,11 @@ class HomeScreen extends ConsumerWidget {
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  state.userProfile != null && state.userProfile!.name.isNotEmpty
-                                      ? state.userProfile!.name.substring(0, 1).toUpperCase()
+                                  state.userProfile != null &&
+                                          state.userProfile!.name.isNotEmpty
+                                      ? state.userProfile!.name
+                                            .substring(0, 1)
+                                            .toUpperCase()
                                       : 'H',
                                   style: const TextStyle(
                                     color: Colors.white,
@@ -139,7 +146,12 @@ class HomeScreen extends ConsumerWidget {
               ],
             ),
           ),
-          Positioned(left: 0, right: 0, bottom: 0, child: const CustomBottomNav()),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: const CustomBottomNav(),
+          ),
         ],
       ),
     );
