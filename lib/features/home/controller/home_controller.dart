@@ -7,12 +7,7 @@ import '../../../models/user_model.dart';
 import '../../../models/guide_model.dart';
 import '../../../models/community_post_model.dart';
 
-enum HomeStatus {
-  loading,
-  successOnline,
-  successOffline,
-  error,
-}
+enum HomeStatus { loading, successOnline, successOffline, error }
 
 class HomeState {
   final UserModel? userProfile;
@@ -39,7 +34,8 @@ class HomeState {
 
   bool get isOffline => simulatedOffline ?? !isNetworkConnected;
 
-  bool get isFirstTime => simulatedFirstTime ?? (userProfile?.isFirstTime ?? false);
+  bool get isFirstTime =>
+      simulatedFirstTime ?? (userProfile?.isFirstTime ?? false);
 
   bool get completedCheckIn {
     if (isFirstTime) return false;
@@ -51,12 +47,16 @@ class HomeState {
   String get greetingText {
     final name = userProfile?.name ?? 'Harsh';
     if (isFirstTime) return 'Welcome,\n$name.';
-    return effectiveTimeOfDay == 'Morning' ? 'Morning, $name.' : 'Evening, $name.';
+    return effectiveTimeOfDay == 'Morning'
+        ? 'Morning, $name.'
+        : 'Evening, $name.';
   }
 
   String get accentText {
     if (isFirstTime) return 'glad you came.';
-    return effectiveTimeOfDay == 'Morning' ? "it's a quiet one." : 'good work today.';
+    return effectiveTimeOfDay == 'Morning'
+        ? "it's a quiet one."
+        : 'good work today.';
   }
 
   String get effectiveTimeOfDay {
@@ -87,10 +87,16 @@ class HomeState {
       communityPosts: communityPosts ?? this.communityPosts,
       isNetworkConnected: isNetworkConnected ?? this.isNetworkConnected,
       simulatedTimeOfDay: simulatedTimeOfDay ?? this.simulatedTimeOfDay,
-      simulatedFirstTime: simulatedFirstTime != null ? simulatedFirstTime() : this.simulatedFirstTime,
-      simulatedOffline: simulatedOffline != null ? simulatedOffline() : this.simulatedOffline,
+      simulatedFirstTime: simulatedFirstTime != null
+          ? simulatedFirstTime()
+          : this.simulatedFirstTime,
+      simulatedOffline: simulatedOffline != null
+          ? simulatedOffline()
+          : this.simulatedOffline,
       status: status ?? this.status,
-      simulatedStatus: simulatedStatus != null ? simulatedStatus() : this.simulatedStatus,
+      simulatedStatus: simulatedStatus != null
+          ? simulatedStatus()
+          : this.simulatedStatus,
     );
   }
 }
@@ -108,7 +114,6 @@ class HomeController extends StateNotifier<HomeState> {
   bool _userLoaded = false;
   bool _guidesLoaded = false;
   bool _postsLoaded = false;
-  DateTime? _initTime;
 
   HomeController(this._repo, this._connectivityStream) : super(HomeState()) {
     _init();
@@ -119,11 +124,8 @@ class HomeController extends StateNotifier<HomeState> {
     _userLoaded = false;
     _guidesLoaded = false;
     _postsLoaded = false;
-    _initTime = DateTime.now();
 
-    state = state.copyWith(
-      status: HomeStatus.loading,
-    );
+    state = state.copyWith(status: HomeStatus.loading);
 
     _timeoutTimer?.cancel();
     _timeoutTimer = Timer(const Duration(seconds: 5), () {
@@ -172,28 +174,16 @@ class HomeController extends StateNotifier<HomeState> {
       },
     );
 
-    _connectSub = _connectivityStream.listen(
-      (connected) {
-        state = state.copyWith(isNetworkConnected: connected);
-        _updateOnlineOfflineStatus();
-      },
-    );
+    _connectSub = _connectivityStream.listen((connected) {
+      state = state.copyWith(isNetworkConnected: connected);
+      _updateOnlineOfflineStatus();
+    });
   }
 
   void _checkLoadingSuccess() {
     if (_userLoaded && _guidesLoaded && _postsLoaded) {
       _timeoutTimer?.cancel();
-      final elapsed = DateTime.now().difference(_initTime ?? DateTime.now());
-      final remaining = const Duration(seconds: 2) - elapsed;
-      if (remaining > Duration.zero) {
-        Future.delayed(remaining, () {
-          if (mounted && _userLoaded && _guidesLoaded && _postsLoaded) {
-            _updateOnlineOfflineStatus();
-          }
-        });
-      } else {
-        _updateOnlineOfflineStatus();
-      }
+      _updateOnlineOfflineStatus();
     }
   }
 
@@ -239,16 +229,19 @@ class HomeController extends StateNotifier<HomeState> {
     } catch (_) {}
   }
 
-  void setSimulatedTimeOfDay(String value) => state = state.copyWith(simulatedTimeOfDay: value);
+  void setSimulatedTimeOfDay(String value) =>
+      state = state.copyWith(simulatedTimeOfDay: value);
 
-  void setSimulatedFirstTime(bool? value) => state = state.copyWith(simulatedFirstTime: () => value);
+  void setSimulatedFirstTime(bool? value) =>
+      state = state.copyWith(simulatedFirstTime: () => value);
 
   void setSimulatedOffline(bool? value) {
     state = state.copyWith(simulatedOffline: () => value);
     _updateOnlineOfflineStatus();
   }
 
-  void setSimulatedStatus(HomeStatus? value) => state = state.copyWith(simulatedStatus: () => value);
+  void setSimulatedStatus(HomeStatus? value) =>
+      state = state.copyWith(simulatedStatus: () => value);
 
   @override
   void dispose() {
@@ -258,8 +251,10 @@ class HomeController extends StateNotifier<HomeState> {
   }
 }
 
-final homeControllerProvider = StateNotifierProvider<HomeController, HomeState>((ref) {
-  final repo = ref.watch(homeRepositoryProvider);
-  final stream = ref.watch(connectivityServiceProvider).onConnectionChanged;
-  return HomeController(repo, stream);
-});
+final homeControllerProvider = StateNotifierProvider<HomeController, HomeState>(
+  (ref) {
+    final repo = ref.watch(homeRepositoryProvider);
+    final stream = ref.watch(connectivityServiceProvider).onConnectionChanged;
+    return HomeController(repo, stream);
+  },
+);
