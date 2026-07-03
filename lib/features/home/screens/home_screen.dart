@@ -23,19 +23,19 @@ class HomeScreen extends ConsumerWidget {
       backgroundColor: AppColors.background,
       body: Stack(
         children: [
-          Column(
-            children: [
-              OfflineBanner(isVisible: state.isOffline),
-              Expanded(
-                child: SafeArea(
-                  bottom: false,
+          SafeArea(
+            bottom: false,
+            child: Column(
+              children: [
+                OfflineBanner(isVisible: state.isOffline),
+                Expanded(
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                      const SizedBox(height: 24),
+                        const SizedBox(height: 24),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -103,14 +103,14 @@ class HomeScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         Positioned(left: 0, right: 0, bottom: 0, child: const CustomBottomNav()),
       ],
     ),
-    );
-  }
+  );
+}
 
   List<Widget> _buildGuidesList(HomeState state) {
     if (state.isFirstTime) {
