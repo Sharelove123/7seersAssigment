@@ -15,6 +15,7 @@ class GuidesSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(height: 32),
         for (int i = 0; i < widgets.length; i++) ...[
           widgets[i],
           if (i < widgets.length - 1) const SizedBox(height: 32),
