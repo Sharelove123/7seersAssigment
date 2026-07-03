@@ -15,8 +15,13 @@ class OfflineBanner extends StatelessWidget {
       child: isVisible
           ? Container(
               width: double.infinity,
-              color: AppColors.offlineBannerBg,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: const BoxDecoration(
+                color: Colors.transparent,
+                border: Border(
+                  bottom: BorderSide(color: AppColors.border, width: 1),
+                ),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               child: SafeArea(
                 bottom: false,
                 child: Row(
