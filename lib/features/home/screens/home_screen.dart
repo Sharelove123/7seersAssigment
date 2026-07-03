@@ -49,36 +49,10 @@ class HomeScreen extends ConsumerWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                Image.asset(
-                                  'assets/icons/logo.png',
-                                  height: 16,
-                                  fit: BoxFit.contain,
-                                ),
-                                if (state.effectiveStatus ==
-                                    HomeStatus.successOffline) ...[
-                                  const SizedBox(width: 8),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 6,
-                                      vertical: 2,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.badgePaidBg,
-                                      borderRadius: BorderRadius.zero,
-                                    ),
-                                    child: Text(
-                                      'OFFLINE CACHE',
-                                      style: AppTheme.bodyStyle(
-                                        fontSize: 8,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColors.textSecondary,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ],
+                            Image.asset(
+                              'assets/icons/logo.png',
+                              height: 16,
+                              fit: BoxFit.contain,
                             ),
                             GestureDetector(
                               onLongPress: () {
