@@ -22,9 +22,10 @@ class OfflineBanner extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(
-                      Icons.cloud_off_outlined,
-                      size: 16,
+                    Image.asset(
+                      'assets/icons/icon-lock.png',
+                      width: 16,
+                      height: 16,
                       color: AppColors.offlineBannerText,
                     ),
                     const SizedBox(width: 8),
