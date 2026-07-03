@@ -32,6 +32,11 @@ class OfflineBanner extends StatelessWidget {
                       width: 16,
                       height: 16,
                       color: AppColors.offlineBannerText,
+                      errorBuilder: (context, error, stackTrace) => const Icon(
+                        Icons.lock_outline,
+                        size: 16,
+                        color: AppColors.offlineBannerText,
+                      ),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
