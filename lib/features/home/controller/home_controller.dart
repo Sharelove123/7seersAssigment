@@ -108,6 +108,7 @@ class HomeController extends StateNotifier<HomeState> {
   bool _userLoaded = false;
   bool _guidesLoaded = false;
   bool _postsLoaded = false;
+  DateTime? _initTime;
 
   HomeController(this._repo, this._connectivityStream) : super(HomeState()) {
     _init();
@@ -118,6 +119,7 @@ class HomeController extends StateNotifier<HomeState> {
     _userLoaded = false;
     _guidesLoaded = false;
     _postsLoaded = false;
+    _initTime = DateTime.now();
 
     state = state.copyWith(
       status: HomeStatus.loading,
@@ -181,7 +183,17 @@ class HomeController extends StateNotifier<HomeState> {
   void _checkLoadingSuccess() {
     if (_userLoaded && _guidesLoaded && _postsLoaded) {
       _timeoutTimer?.cancel();
-      _updateOnlineOfflineStatus();
+      final elapsed = DateTime.now().difference(_initTime ?? DateTime.now());
+      final remaining = const Duration(seconds: 2) - elapsed;
+      if (remaining > Duration.zero) {
+        Future.delayed(remaining, () {
+          if (mounted && _userLoaded && _guidesLoaded && _postsLoaded) {
+            _updateOnlineOfflineStatus();
+          }
+        });
+      } else {
+        _updateOnlineOfflineStatus();
+      }
     }
   }
 
