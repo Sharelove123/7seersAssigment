@@ -10,25 +10,9 @@ class SubtitleImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String assetPath;
-    if (state.isFirstTime) {
-      assetPath = 'assets/icons/caveat (2).png';
-    } else if (state.effectiveTimeOfDay == 'Morning') {
-      assetPath = 'assets/icons/caveat.png';
-    } else {
-      assetPath = 'assets/icons/caveat (1).png';
-    }
-
-    return Image.asset(
-      assetPath,
-      height: 24,
-      fit: BoxFit.contain,
-      alignment: Alignment.centerLeft,
-      color: AppColors.textAccent,
-      errorBuilder: (context, error, stackTrace) => Text(
-        state.accentText,
-        style: AppTheme.bodyStyle(fontSize: 16, color: AppColors.textSecondary),
-      ),
+    return Text(
+      state.accentText,
+      style: AppTheme.accentStyle(),
     );
   }
 }

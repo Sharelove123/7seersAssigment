@@ -45,11 +45,12 @@ class AppTheme {
   }
 
   static TextStyle accentStyle({
-    double fontSize = 20,
+    double fontSize = 24,
     Color color = AppColors.textAccent,
     FontStyle fontStyle = FontStyle.normal,
   }) {
-    return GoogleFonts.caveat(
+    return TextStyle(
+      fontFamily: 'High Empathy',
       fontSize: fontSize,
       fontWeight: FontWeight.w400,
       color: color,
